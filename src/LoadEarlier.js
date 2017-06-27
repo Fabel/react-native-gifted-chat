@@ -101,5 +101,5 @@ LoadEarlier.propTypes = {
   wrapperStyle: ViewPropTypes.style,
   textStyle: Text.propTypes.style,
   activityIndicatorStyle: View.propTypes.style,
-  activityIndicatorColor: View.propTypes.string,
+  activityIndicatorColor: React.PropTypes.string,
 };
