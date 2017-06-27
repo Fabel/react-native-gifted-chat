@@ -27,7 +27,7 @@ export default class LoadEarlier extends React.Component {
           {this.props.label}
         </Text>
         <ActivityIndicator
-          color='white'
+          color={this.props.activityIndicatorColor}
           size='small'
           style={[styles.activityIndicator, this.props.activityIndicatorStyle]}
         />
@@ -90,6 +90,7 @@ LoadEarlier.defaultProps = {
   wrapperStyle: {},
   textStyle: {},
   activityIndicatorStyle: {},
+  activityIndicatorColor: 'white'
 };
 
 LoadEarlier.propTypes = {
@@ -99,5 +100,6 @@ LoadEarlier.propTypes = {
   containerStyle: ViewPropTypes.style,
   wrapperStyle: ViewPropTypes.style,
   textStyle: Text.propTypes.style,
-  activityIndicatorStyle: ViewPropTypes.style,
+  activityIndicatorStyle: View.propTypes.style,
+  activityIndicatorColor: View.propTypes.string,
 };
