@@ -60,6 +60,7 @@ Time.contextTypes = {
 
 Time.defaultProps = {
   position: 'left',
+  timeFormat: 'LT',
   currentMessage: {
     createdAt: null,
   },
