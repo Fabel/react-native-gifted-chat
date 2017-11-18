@@ -1,13 +1,12 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   Text,
   View,
-  ViewPropTypes,
 } from 'react-native';
 
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales.min';
 
 export default class Time extends React.Component {
   render() {
@@ -71,13 +70,13 @@ Time.defaultProps = {
 Time.propTypes = {
   position: PropTypes.oneOf(['left', 'right']),
   currentMessage: PropTypes.object,
+  timeFormat: PropTypes.string,
   containerStyle: PropTypes.shape({
-    left: ViewPropTypes.style,
-    right: ViewPropTypes.style,
+    left: View.propTypes.style,
+    right: View.propTypes.style,
   }),
   textStyle: PropTypes.shape({
     left: Text.propTypes.style,
     right: Text.propTypes.style,
   }),
-  timeFormat: PropTypes.string,
 };

@@ -1,14 +1,13 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
+PropTypes
 import {
   View,
-  ViewPropTypes,
   StyleSheet,
 } from 'react-native';
 
 import Avatar from './Avatar';
 import Bubble from './Bubble';
-import SystemMessage from './SystemMessage';
 import Day from './Day';
 
 import {isSameUser, isSameDay} from './utils';
@@ -43,37 +42,25 @@ export default class Message extends React.Component {
     return <Bubble {...bubbleProps}/>;
   }
 
-  renderSystemMessage() {
-    const systemMessageProps = this.getInnerComponentProps();
-    if (this.props.renderSystemMessage) {
-      return this.props.renderSystemMessage(systemMessageProps);
-    }
-    return <SystemMessage {...systemMessageProps} />;
-  }
-
   renderAvatar() {
-    if (this.props.user._id === this.props.currentMessage.user._id && !this.props.showUserAvatar) {
-      return null;
+    if (this.props.user._id !== this.props.currentMessage.user._id) {
+      const avatarProps = this.getInnerComponentProps();
+      return <Avatar {...avatarProps}/>;
     }
-    const avatarProps = this.getInnerComponentProps();
-    const { currentMessage } = avatarProps;
-    if (currentMessage.user.avatar === null) {
-      return null;
-    }
-    return <Avatar {...avatarProps} />;
+    return null;
   }
 
   render() {
     return (
       <View>
         {this.renderDay()}
-        {this.props.currentMessage.system ? 
-          this.renderSystemMessage() :
-          <View style={[styles[this.props.position].container, { marginBottom: isSameUser(this.props.currentMessage, this.props.nextMessage) ? 2 : 10 }, this.props.containerStyle[this.props.position]]}>
-            {this.props.position === "left" ? this.renderAvatar() : null}
-            {this.renderBubble()}
-            {this.props.position === "right" ? this.renderAvatar() : null}
-          </View>}
+        <View style={[styles[this.props.position].container, {
+          marginBottom: isSameUser(this.props.currentMessage, this.props.nextMessage) ? 2 : 10,
+        }, this.props.containerStyle[this.props.position]]}>
+          {this.props.position === 'left' ? this.renderAvatar() : null}
+          {this.renderBubble()}
+          {this.props.position === 'right' ? this.renderAvatar() : null}
+        </View>
       </View>
     );
   }
@@ -101,10 +88,9 @@ const styles = {
 };
 
 Message.defaultProps = {
-  renderAvatar: undefined,
+  renderAvatar: null,
   renderBubble: null,
   renderDay: null,
-  renderSystemMessage: null,
   position: 'left',
   currentMessage: {},
   nextMessage: {},
@@ -115,17 +101,15 @@ Message.defaultProps = {
 
 Message.propTypes = {
   renderAvatar: PropTypes.func,
-  showUserAvatar: PropTypes.bool,
   renderBubble: PropTypes.func,
   renderDay: PropTypes.func,
-  renderSystemMessage: PropTypes.func,
   position: PropTypes.oneOf(['left', 'right']),
   currentMessage: PropTypes.object,
   nextMessage: PropTypes.object,
   previousMessage: PropTypes.object,
   user: PropTypes.object,
   containerStyle: PropTypes.shape({
-    left: ViewPropTypes.style,
-    right: ViewPropTypes.style,
+    left: View.propTypes.style,
+    right: View.propTypes.style,
   }),
 };
